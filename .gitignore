@@ -1,5 +1,5 @@
 .env
 /node_modules
-/JSON
+/JSON/wallets.json
 /scripts/.env
 /contracts
