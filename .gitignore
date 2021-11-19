@@ -1,0 +1,5 @@
+.env
+/node_modules
+/JSON
+/scripts/.env
+/contracts

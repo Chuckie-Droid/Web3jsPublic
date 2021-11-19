@@ -1,0 +1,21 @@
+{
+  "name": "web3js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chuckie-droid",
+  "license": "ISC",
+  "dependencies": {
+    "@ethereumjs/tx": "^3.3.2",
+    "@types/node": "^16.11.6",
+    "@types/web3": "^1.2.2",
+    "bip39": "^3.0.4",
+    "dotenv": "^10.0.0",
+    "ethereumjs-wallet": "^1.0.2",
+    "node": "^16.11.6",
+    "web3": "^1.5.2"
+  }
+}
