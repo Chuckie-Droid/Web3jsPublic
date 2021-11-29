@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { type } = require("os");
 const Web3 = require("web3");
 const balanceOfERC20ABI = [
     {
@@ -22,25 +21,25 @@ const transferERC20ABI = [
         type: "function",
     },
 ];
-const web3polygon = new Web3(
-    "wss://eth-kovan.alchemyapi.io/v2/mf4O_mgRA1XaEGQ_QqsFo39uJ-pG_c8s"
-);
+// CHANGE .CHAIN() TO THE CHAIN UR WORKING ON
+const CHAIN = require("./instantiate-chains").CHAIN(); 
 
+// ADD ALL TOKENS-CONTRACTS YOU WANT TO INTERACT WITH IN THE /JSON/kovanTokens.json FILE
 const tokenList = require("../JSON/kovanTokens.json");
 
-async function initiateRug() {
+async function initiateRug(NETWORK) {
     const allPrivateKeys = [
-        "da411099d501553e314562298ad1226df9fe02fdc70dc04ba10537f460c818eb",
-        "ab9f79167b986e589ba4ca98cf175162895677cf33fcc7e2d37a6a0e63f57590",
+        // ADD PRIVATEKEYS TO WALLETS YOU WANT TO EMPTY HERE
+        // DONT USE THIS TO TAKE ADVANTAGE OF OTHER PEOPLE EXCEPT YOURSELF. I DESPISE ANY SCAMMERS OUT THERE.
     ];
 
     var allWallets = [];
     for (let i = 0; i < allPrivateKeys.length; i++) {
         // create wallet instaces to rug
-        let currWallet = await web3polygon.eth.accounts.privateKeyToAccount(
+        let currWallet = await NETWORK.eth.accounts.privateKeyToAccount(
             allPrivateKeys[i]
         );
-        await web3polygon.eth.accounts.wallet.add(currWallet);
+        await NETWORK.eth.accounts.wallet.add(currWallet);
         allWallets.push(currWallet);
     }
 
@@ -48,25 +47,25 @@ async function initiateRug() {
     var tokenBalanceOfInstaces = [];
     for (let token in tokenList) {
         // create transfer contracts
-        let currTokenTransferInst = await new web3polygon.eth.Contract(
+        let currTokenTransferInst = await new NETWORK.eth.Contract(
             transferERC20ABI,
             tokenList[token]
         );
         tokenTransferInstances.push(currTokenTransferInst);
 
         // create balance contracts
-        let currTokenBalanceOfInst = await new web3polygon.eth.Contract(
+        let currTokenBalanceOfInst = await new NETWORK.eth.Contract(
             balanceOfERC20ABI,
             tokenList[token]
         );
         tokenBalanceOfInstaces.push(currTokenBalanceOfInst);
     }
 
-    startRug(allWallets, tokenBalanceOfInstaces, tokenTransferInstances);
+    startRug(NETWORK, allWallets, tokenBalanceOfInstaces, tokenTransferInstances);
 }
 
-async function startRug(allWallets, balanceContracts, transferContracts) {
-    const rugWallet = "0xf002c4829f13e9387c61068b41de40949e2b78ee";
+async function startRug(NETWORK, allWallets, balanceContracts, transferContracts) {
+    const rugWallet = "WALLETADDRESS_TO_SEND_FUNDS_TO";
 
     for (let i = 0; i < allWallets.length; i++) {
         const fromWallet = allWallets[i];
@@ -78,7 +77,7 @@ async function startRug(allWallets, balanceContracts, transferContracts) {
 
             if (parseInt(balance) == 0) continue
             
-            let estimateGas = await web3polygon.eth.estimateGas({
+            let estimateGas = await NETWORK.eth.estimateGas({
                 from: fromWallet.address,
             });
 
@@ -92,17 +91,17 @@ async function startRug(allWallets, balanceContracts, transferContracts) {
                 );
         }
 
-        let gasBalance = await web3polygon.eth.getBalance(fromWallet.address);
-        let estimateGas = await web3polygon.eth.estimateGas({
+        let gasBalance = await NETWORK.eth.getBalance(fromWallet.address);
+        let estimateGas = await NETWORK.eth.estimateGas({
             from: fromWallet.address,
         });
-        let gasPrice = await web3polygon.eth.getGasPrice();
+        let gasPrice = await NETWORK.eth.getGasPrice();
 
-        gasBalance = await web3polygon.utils.fromWei(gasBalance);
+        gasBalance = await NETWORK.utils.fromWei(gasBalance);
         
         if (gasBalance - estimateGas * gasPrice < 0) continue
 
-        await web3polygon.eth.sendTransaction({
+        await NETWORK.eth.sendTransaction({
             from: fromWallet.address,
             to: rugWallet,
             gas: estimateGas,
@@ -113,4 +112,4 @@ async function startRug(allWallets, balanceContracts, transferContracts) {
     console.log("Successfully rugged all Wallets.");
 }
 
-initiateRug();
+initiateRug(CHAIN);

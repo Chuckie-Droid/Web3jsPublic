@@ -1,5 +1,4 @@
 {
-    "MUMBAI": "wss://polygon-mumbai.g.alchemy.com/v2/mf4O_mgRA1XaEGQ_QqsFo39uJ-pG_c8s",
-    "KOVAN": "wss://eth-kovan.alchemyapi.io/v2/mf4O_mgRA1XaEGQ_QqsFo39uJ-pG_c8s",
-    "POLY": "wss://polygon-mainnet.g.alchemy.com/v2/mf4O_mgRA1XaEGQ_QqsFo39uJ-pG_c8s"
+    "MUMBAI": "wss://some_polygon_mumbai_address/apikey",
+    "KOVAN": "wss://some_ethereum_kovan_address/apikey"
 }

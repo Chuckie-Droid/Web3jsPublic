@@ -3,8 +3,10 @@ require("dotenv").config();
 const helperFunctions = require("./helper-functions");
 
 // INSTANTIATE CHAIN WEBSOCKET
-const kovan = require("./instantiate-chains").KOVAN();
-const poly = require("./instantiate-chains").POLY();
+// change the .KOVAN() to whatever websocket you are using.
+// Make sure to add you API-KEYS to /JSON/chainsockets.json and change your function names 
+// in /modules/instantiate-chains.js to your liking
+const kovan = require("./instantiate-chains").KOVAN(); 
 
 // INSTANTIATE NEEDED JSON FILES
 const uniswapContracts = require("../JSON/uniswapContracts.json");
@@ -12,7 +14,7 @@ const uniswapAbis = require("../JSON/uniswapAbis.json");
 const tokenAddresses = require("../JSON/kovanTokens.json");
 
 // INSTANTIATE WALLET / WALLETS
-const wallet = kovan.eth.accounts.privateKeyToAccount(process.env.BOT_WALLET_1 );
+const wallet = kovan.eth.accounts.privateKeyToAccount(process.env.PRIVATEKEY);
 kovan.eth.accounts.wallet.add(wallet);
 
 async function swapExactTKNForETH(network, fromTokenAddress, amountIn) {
@@ -71,14 +73,7 @@ async function swapExactTKNForTKN(network, fromTokenAddress, toTokenAddress, amo
 }
 
 async function start() {
-    // await helperFunctions.approveSpendLimit(kovan, wallet.address, tokenAddresses.LINK, uniswapContracts.router)
-    // await swapExactTKNForTKN(kovan, tokenAddresses.LINK, tokenAddresses.DAI, 0.0001);
-
-    // var subscription = poly.eth.subscribe("pendingTransactions", async (error, txHash) => {
-    //     if (!error) {
-    //         console.log(txHash)
-    //     }
-    // })
+    // call your functions here with await functionName(parameter1, ... , parameterN)
 }
 
 start()

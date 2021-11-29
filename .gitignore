@@ -1,5 +1,5 @@
 .env
 /node_modules
 /JSON/wallets.json
-/scripts/.env
 /contracts
+/modules/rug-wallets.js

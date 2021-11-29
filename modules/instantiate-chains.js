@@ -9,8 +9,4 @@ function MUMBAI() {
     return new Web3(wssURLS.MUMBAI);
 }
 
-function POLY() {
-    return new Web3(wssURLS.POLY);
-}
-
-module.exports = { KOVAN, MUMBAI, POLY };
+module.exports = { KOVAN, MUMBAI };

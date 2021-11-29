@@ -179,7 +179,7 @@ async function revokeSpendLimit(network, fromWallet, tokenAddress) {
                 if (!error) {
                     await waitForTxConfirmation(network, txHash);
                 } else {
-                    console.log("Error during the revoke of a the current spend limit.\n", error);
+                    console.log("Error during the revoke process of your current spend limit.\n", error);
                 }
             }
         )
